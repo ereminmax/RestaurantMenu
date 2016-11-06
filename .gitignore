@@ -71,3 +71,7 @@ fabric.properties
 /.idea/
 /.gitignore
 /NCMentor.iml
+
+# Intellij
+.idea/
+*.iml
