@@ -1,39 +1,30 @@
 package com.maxeremin;
 
-import javax.imageio.IIOException;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 class Main {
 
-    Logger logger = Logger.getLogger(Main.class.getName());
-    FileHandler fh;
+    static Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String ... arg) {
 
-        new Main().doSomeLog();
+        doSomeLog();
         System.out.println("Hello, Maven!");
 
     }
 
-    private void doSomeLog() {
+    static void doSomeLog() {
 
         try {
-
-            fh = new FileHandler("C:\\Git\\NCMentor\\src\\test\\java\\MyLogFile.log");
-            logger.addHandler(fh);
-
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-
+            LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "IOException: ", ex);
+            System.err.println("Could not setup logger configuration: " + ex.toString());
         }
 
-        logger.info("Greeting starts\n");
+        logger.fine("Greeting starts.");
 
     }
-
 }
