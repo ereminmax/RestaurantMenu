@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu_list>
+    <menu_item id="1">
+        <name>
+            Рулет с изюмом
+        </name>
+        <dishType>
+            Sweet
+        </dishType>
+        <price>
+            15
+        </price>
+    </menu_item>
+    <menu_item id="2">
+        <name>
+            Печень по королевски
+        </name>
+        <dishType>
+            Second
+        </dishType>
+        <price>
+            54
+        </price>
+    </menu_item>
+    <menu_item id="3">
+        <name>
+            Рис отварной с маслом
+        </name>
+        <dishType>
+            Second
+        </dishType>
+        <price>
+            16
+        </price>
+    </menu_item>
+    <menu_item id="4">
+        <name>
+            Салат Изюминка
+        </name>
+        <dishType>
+            Salad
+        </dishType>
+        <price>
+            35
+        </price>
+    </menu_item>
+    <menu_item id="5">
+        <name>
+            Пирог с повидлом
+        </name>
+        <dishType>
+            Sweet
+        </dishType>
+        <price>
+            13
+        </price>
+    </menu_item>
+    <menu_item id="6">
+        <name>
+            Пирог с яблоками
+        </name>
+        <dishType>
+            Sweet
+        </dishType>
+        <price>
+            13
+        </price>
+    </menu_item>
+    <menu_item id="7">
+        <name>
+            Салат Лукошко
+        </name>
+        <dishType>
+            Salad
+        </dishType>
+        <price>
+            40
+        </price>
+    </menu_item>
+    <menu_item id="8">
+        <name>
+            Салат Капустный с помидором
+        </name>
+        <dishType>
+            Salad
+        </dishType>
+        <price>
+            19
+        </price>
+    </menu_item>
+    <menu_item id="9">
+        <name>
+            Суп харчо с говядиной
+        </name>
+        <dishType>
+            First
+        </dishType>
+        <price>
+            31
+        </price>
+    </menu_item>
+    <menu_item id="10">
+        <name>
+            Суп куриный с грибами
+        </name>
+        <dishType>
+            First
+        </dishType>
+        <price>
+            34
+        </price>
+    </menu_item>
+    <menu_item id="11">
+        <name>
+            Суп болгарский вегетарианский
+        </name>
+        <dishType>
+            First
+        </dishType>
+        <price>
+            21
+        </price>
+    </menu_item>
+    <menu_item id="12">
+        <name>
+            Рыбное филе с помидоркой
+        </name>
+        <dishType>
+            Second
+        </dishType>
+        <price>
+            54
+        </price>
+    </menu_item>
+    <menu_item id="13">
+        <name>
+            Свинина запеченная"По-гусарски"
+        </name>
+        <dishType>
+            Second
+        </dishType>
+        <price>
+            68
+        </price>
+    </menu_item>
+    <menu_item id="14">
+        <name>
+            Греча с маслом
+        </name>
+        <dishType>
+            Second
+        </dishType>
+        <price>
+            17
+        </price>
+    </menu_item>
+    <menu_item id="15">
+        <name>
+            Макароны отварные
+        </name>
+        <dishType>
+            Second
+        </dishType>
+        <price>
+            15
+        </price>
+    </menu_item>
+</menu_list>
