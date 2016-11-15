@@ -45,10 +45,6 @@ public class View {
     }
 
     private void readMenu() {
-        System.out.println("Введите имя файла с расширением");
-
-        String name = sc.nextLine();
-
         controller.readMenu();
 
         System.out.println("Done!");
