@@ -33,7 +33,9 @@ public class View {
                     System.exit(0);
                     break;
                 case 1:
-                    readMenu();
+                    controller.readTypes();
+                    controller.readMenu();
+                    System.out.println("Done!");
                     break;
                 case 2:
                     search();
@@ -42,12 +44,6 @@ public class View {
                     continue;
             }
         }
-    }
-
-    private void readMenu() {
-        controller.readMenu();
-
-        System.out.println("Done!");
     }
 
     private void search() {

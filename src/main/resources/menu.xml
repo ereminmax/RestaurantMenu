@@ -5,7 +5,7 @@
             Рулет с изюмом
         </name>
         <dishType>
-            Sweet
+            4
         </dishType>
         <price>
             15
@@ -16,7 +16,7 @@
             Печень по королевски
         </name>
         <dishType>
-            Second
+            2
         </dishType>
         <price>
             54
@@ -27,7 +27,7 @@
             Рис отварной с маслом
         </name>
         <dishType>
-            Second
+            2
         </dishType>
         <price>
             16
@@ -38,7 +38,7 @@
             Салат Изюминка
         </name>
         <dishType>
-            Salad
+            3
         </dishType>
         <price>
             35
@@ -49,7 +49,7 @@
             Пирог с повидлом
         </name>
         <dishType>
-            Sweet
+            4
         </dishType>
         <price>
             13
@@ -60,7 +60,7 @@
             Пирог с яблоками
         </name>
         <dishType>
-            Sweet
+            4
         </dishType>
         <price>
             13
@@ -71,7 +71,7 @@
             Салат Лукошко
         </name>
         <dishType>
-            Salad
+            3
         </dishType>
         <price>
             40
@@ -82,7 +82,7 @@
             Салат Капустный с помидором
         </name>
         <dishType>
-            Salad
+            3
         </dishType>
         <price>
             19
@@ -93,7 +93,7 @@
             Суп харчо с говядиной
         </name>
         <dishType>
-            First
+            1
         </dishType>
         <price>
             31
@@ -104,7 +104,7 @@
             Суп куриный с грибами
         </name>
         <dishType>
-            First
+            1
         </dishType>
         <price>
             34
@@ -115,7 +115,7 @@
             Суп болгарский вегетарианский
         </name>
         <dishType>
-            First
+            1
         </dishType>
         <price>
             21
@@ -126,7 +126,7 @@
             Рыбное филе с помидоркой
         </name>
         <dishType>
-            Second
+            2
         </dishType>
         <price>
             54
@@ -137,7 +137,7 @@
             Свинина запеченная"По-гусарски"
         </name>
         <dishType>
-            Second
+            2
         </dishType>
         <price>
             68
@@ -148,7 +148,7 @@
             Греча с маслом
         </name>
         <dishType>
-            Second
+            2
         </dishType>
         <price>
             17
@@ -159,7 +159,7 @@
             Макароны отварные
         </name>
         <dishType>
-            Second
+            2
         </dishType>
         <price>
             15

@@ -5,10 +5,10 @@ package com.maxeremin.model;
  */
 public class MenuItem {
     private String name;
-    private DishType dishType;
+    private String dishType;
     private Double price;
 
-    public MenuItem(String name, DishType dishType, Double price) {
+    public MenuItem(String name, String dishType, Double price) {
         this.name = name;
         this.dishType = dishType;
         this.price = price;
@@ -18,7 +18,7 @@ public class MenuItem {
         return name;
     }
 
-    public DishType getWeight() {
+    public String getDishType() {
         return dishType;
     }
 

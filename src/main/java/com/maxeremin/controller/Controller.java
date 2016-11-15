@@ -16,6 +16,10 @@ public class Controller implements ControllerInterface{
         view.execute();
     }
 
+    public void readTypes() {
+        model.readTypes();
+    }
+
     public void readMenu() {
         model.readMenu();
     }
