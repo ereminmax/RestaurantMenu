@@ -49,7 +49,7 @@ public class View {
 
         String name = sc.nextLine();
 
-        controller.readMenu(name);
+        controller.readMenu();
 
         System.out.println("Done!");
     }

@@ -20,9 +20,9 @@ public class Model implements ModelInterface{
     public Model() {
     }
 
-    public void readMenu(String menuFileName) {
+    public void readMenu() {
         try {
-            String path = "src\\main\\resources\\"+menuFileName;
+            String path = "src\\main\\resources\\menu.xml";
             File file = new File(path);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();

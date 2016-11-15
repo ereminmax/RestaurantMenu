@@ -16,8 +16,8 @@ public class Controller implements ControllerInterface{
         view.execute();
     }
 
-    public void readMenu(String value) {
-        model.readMenu(value);
+    public void readMenu() {
+        model.readMenu();
     }
 
     public String search(String name) {

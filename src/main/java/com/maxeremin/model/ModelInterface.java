@@ -5,7 +5,7 @@ package com.maxeremin.model;
  */
 public interface ModelInterface {
 
-    void readMenu(String value);
+    void readMenu();
     String search(String name);
 
 }
