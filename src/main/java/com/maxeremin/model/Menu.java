@@ -1,4 +1,4 @@
-package com.maxeremin;
+package com.maxeremin.model;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,7 @@
-package com.maxeremin;
+package com.maxeremin.controller;
+
+import com.maxeremin.model.ModelInterface;
+import com.maxeremin.view.View;
 
 /**
  * Created by Максим on 13.11.2016.

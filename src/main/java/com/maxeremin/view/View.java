@@ -1,6 +1,7 @@
-package com.maxeremin;
+package com.maxeremin.view;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+import com.maxeremin.controller.ControllerInterface;
+import com.maxeremin.model.ModelInterface;
 
 import java.util.Scanner;
 
