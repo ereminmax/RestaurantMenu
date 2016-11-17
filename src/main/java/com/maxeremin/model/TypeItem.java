@@ -4,8 +4,8 @@ package com.maxeremin.model;
  * Created by Максим on 13.11.2016.
  */
 class TypeItem {
-    int id;
-    String value;
+    private int id;
+    private String value;
 
     TypeItem(int id, String value) {
         this.id = id;

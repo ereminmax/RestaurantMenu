@@ -9,13 +9,14 @@ import java.util.Scanner;
  * Created by Максим on 13.11.2016.
  */
 public class View {
+    private static View instance = null;
     ModelInterface model;
     ControllerInterface controller;
 
     private Scanner sc = new Scanner(System.in);
     private int input;
 
-    public View(ControllerInterface controller, ModelInterface model) {
+    private View(ControllerInterface controller, ModelInterface model) {
         this.controller = controller;
         this.model = model;
     }
@@ -54,5 +55,10 @@ public class View {
         String reply = controller.search(name);
 
         System.out.println(reply);
+    }
+
+    public static synchronized View getInstance(ControllerInterface controller, ModelInterface model) {
+        if (instance == null) instance = new View(controller, model);
+        return instance;
     }
 }

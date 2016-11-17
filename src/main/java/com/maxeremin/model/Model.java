@@ -13,11 +13,11 @@ import java.io.File;
  * Created by Максим on 13.11.2016.
  */
 public class Model implements ModelInterface{
-
+    private static Model instance = null;
     private Menu menu = new Menu();
     private Types types = new Types();
 
-    public Model() {
+    private Model() {
     }
 
     public void readTypes() {
@@ -42,6 +42,7 @@ public class Model implements ModelInterface{
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("exception occurred while reading types");
         }
     }
 
@@ -72,6 +73,7 @@ public class Model implements ModelInterface{
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("exception occurred while reading menu");
         }
     }
 
@@ -82,5 +84,10 @@ public class Model implements ModelInterface{
         }
 
         return "Not found! ";
+    }
+
+    public static synchronized Model getInstance() {
+        if (instance == null) instance = new Model();
+        return instance;
     }
 }
