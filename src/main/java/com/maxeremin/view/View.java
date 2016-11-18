@@ -4,6 +4,7 @@ import com.maxeremin.controller.ControllerInterface;
 import com.maxeremin.model.ModelInterface;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Максим on 13.11.2016.
@@ -41,6 +42,8 @@ public class View {
                 case 2:
                     search();
                     break;
+                /*case 3:
+                    new Exception("exception", new Exception())*/
                 default:
                     continue;
             }

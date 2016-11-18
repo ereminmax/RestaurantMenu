@@ -1,5 +1,6 @@
 package com.maxeremin.model;
 
+import org.apache.logging.log4j.LogManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,6 +10,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Created by Максим on 13.11.2016.
  */
@@ -16,6 +20,7 @@ public class Model implements ModelInterface{
     private static Model instance = null;
     private Menu menu = new Menu();
     private Types types = new Types();
+    private static final Logger logger = LogManager.getLogger();
 
     private Model() {
     }
@@ -41,7 +46,7 @@ public class Model implements ModelInterface{
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("exception occurred while reading types",e);
             System.err.println("exception occurred while reading types");
         }
     }
@@ -72,7 +77,7 @@ public class Model implements ModelInterface{
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("exception occurred while reading types",e);
             System.err.println("exception occurred while reading menu");
         }
     }
