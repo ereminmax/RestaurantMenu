@@ -1,6 +1,8 @@
 package com.maxeremin.model;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,9 +12,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * Created by Максим on 13.11.2016.
  */
@@ -21,6 +20,7 @@ public class Model implements ModelInterface{
     private Menu menu = new Menu();
     private Types types = new Types();
     private static final Logger logger = LogManager.getLogger();
+    private SearchValidator searchValidator = new SearchValidator();
 
     private Model() {
     }
@@ -84,8 +84,15 @@ public class Model implements ModelInterface{
 
     public String search(String name) {
 
+        if (!searchValidator.validate(name)) {
+            return "Error: Target sentence must contain only cyrillic letters or spaces! ";
+        }
+
+        // To remove duplicate white spaces
+        String cleanName = name.replaceAll("\\s+"," ");
+
         for(MenuItem el : menu.getMenu()) {
-            if (name.equals(el.getName())) return el.toString();
+            if (cleanName.equalsIgnoreCase(el.getName())) return el.toString();
         }
 
         return "Not found! ";
