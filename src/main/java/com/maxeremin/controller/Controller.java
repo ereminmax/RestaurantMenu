@@ -38,6 +38,18 @@ public class Controller implements ControllerInterface{
         return exceptionDetected;
     }
 
+    public void add(String name, String type, Double price) {
+        model.add(name, type, price);
+    }
+
+    public void remove(String name) {
+        model.remove(name);
+    }
+
+    public void update(String name, String newName, String type, Double price) {
+        model.update(name, newName, type, price);
+    }
+
     public static synchronized Controller getInstance() {
         if (instance == null) instance = new Controller();
         return instance;

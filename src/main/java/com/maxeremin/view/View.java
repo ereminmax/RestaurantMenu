@@ -1,6 +1,8 @@
 package com.maxeremin.view;
 
 import com.maxeremin.controller.Controller;
+import com.maxeremin.model.MenuItem;
+import com.maxeremin.model.Model;
 
 import java.util.Scanner;
 
@@ -17,13 +19,12 @@ public class View {
 
     public void execute() {
         while(true) {
-            System.out.println("Введите 0 Выход\n"
+            System.out.print("Введите 0 Выход\n"
                     + "Введите 1 Открыть XML\n"
-                    + "Введите 2 Найти пункт меню"
-                    //+ "Введите 3 Добавить пункт меню"
-                    //+ "Введите 4 Удалить пункт меню"
-                    //+ "Введите 5 Изменить пункт меню"
-
+                    + "Введите 2 Найти пункт меню\n"
+                    + "Введите 3 Добавить пункт меню\n"
+                    + "Введите 4 Удалить пункт меню\n"
+                    + "Введите 5 Изменить пункт меню\n"
             );
             input = sc.nextInt();
             sc.nextLine();
@@ -38,19 +39,113 @@ public class View {
                 case 2:
                     search();
                     break;
-                /*case 3:
-                    controller.add();
-                    if (Controller.getInstance().checkStatus()) {
-                        System.err.println("Dish with specified name does not exist! ");
-                        return;
-                    }
-                    break;*/
-                /*case 4:
-                    Controller.getInstance().remove(name);*/
+                case 3:
+                    add();
+                    break;
+                case 4:
+                    remove();
+                    break;
+                case 5:
+                    update();
+                    break;
                 default:
                     continue;
             }
         }
+    }
+
+    private String chooseType() {
+        String type = null;
+        System.out.print("Выберите тип пункта меню, на которое требуется заменить исходное значение\n"
+                + "Введите 1 Первое\n"
+                + "Введите 2 Второе\n"
+                + "Введите 3 Салат\n"
+                + "Введите 4 Сладкое\n"
+        );
+        int typeID = sc.nextInt();
+        sc.nextLine();
+
+        switch (typeID) {
+            case 1:
+                type = "First";
+                break;
+            case 2:
+                type = "Second";
+                break;
+            case 3:
+                type = "Salad";
+                break;
+            case 4:
+                type = "Sweet";
+                break;
+            default:
+                System.err.println("Выберите один из предложенных вариантов!");
+        }
+        return type;
+    }
+
+    private void update() {
+        System.out.println("Введите имя пункта меню, название которого требуется изменить");
+        String name = sc.nextLine();
+
+        System.out.println("Введите новое имя пункта меню, либо оставьте поле пустым");
+        String newName = sc.nextLine();
+        if (newName.equals("")) newName = null;
+
+        String type = chooseType();
+        if (type == null) return;
+
+        System.out.println("Введите цену пункта меню, на которое требуется заменить исходное значение\n");
+        Double price = sc.nextDouble();
+        sc.nextLine();
+
+        Controller.getInstance().update(name, newName, type, price);
+
+        if (Controller.getInstance().checkStatus()) {
+            System.err.println("Dish with specified name does not exist! ");
+            return;
+        }
+        System.out.println("Done! ");
+        printMenu();
+    }
+
+    private void remove() {
+        System.out.println("Введите имя пункта меню");
+        String name = sc.nextLine();
+        Controller.getInstance().remove(name);
+        if (Controller.getInstance().checkStatus()) {
+            System.err.println("Dish with specified name does not exist! ");
+            return;
+        }
+        System.out.println("Done! ");
+        printMenu();
+    }
+
+    private void printMenu() {
+        for(MenuItem mi: Model.getInstance().getMenu()) {
+            System.out.println(mi.toString());
+        }
+    }
+
+    private void add() {
+
+        System.out.println("Введите имя пункта меню");
+        String name = sc.nextLine();
+
+        String type = chooseType();
+        if (type == null) return;
+
+        System.out.println("Введите цену пункта меню");
+        Double price = sc.nextDouble();
+        sc.nextLine();
+        Controller.getInstance().add(name, type, price);
+
+        if (Controller.getInstance().checkStatus()) {
+            System.err.println("Dish with specified name does not exist! ");
+            return;
+        }
+        System.out.println("Done! ");
+        printMenu();
     }
 
     private void readFiles() {
