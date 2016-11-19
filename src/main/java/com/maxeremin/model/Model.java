@@ -1,5 +1,7 @@
 package com.maxeremin.model;
 
+import com.maxeremin.controller.Controller;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +29,7 @@ public class Model implements ModelInterface{
 
     public void readTypes() {
         try {
-            String path = "src\\main\\resources\\types.xml";
+            String path = "src\\main\\resources\\type.xml";
             File file = new File(path);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -46,8 +48,8 @@ public class Model implements ModelInterface{
                 }
             }
         } catch (Exception e) {
-            logger.error("exception occurred while reading types",e);
-            System.err.println("exception occurred while reading types");
+            logger.error("Exception occurred while reading types", e);
+            Controller.getInstance().placeError(true);
         }
     }
 
@@ -77,8 +79,8 @@ public class Model implements ModelInterface{
                 }
             }
         } catch (Exception e) {
-            logger.error("exception occurred while reading types",e);
-            System.err.println("exception occurred while reading menu");
+            logger.error("Exception occurred while reading types", e);
+            Controller.getInstance().placeError(true);
         }
     }
 
@@ -96,6 +98,23 @@ public class Model implements ModelInterface{
         }
 
         return "Not found! ";
+    }
+
+    public void add(String name, String type, Double price) {
+
+        for (TypeItem ti: types.getTypes()) {
+            if (type.equals(ti.getValue())) {
+                menu.addMenuItem(new MenuItem(name, ti.getValue(), price));
+                return;
+            }
+        }
+
+        Controller.getInstance().placeError(true);
+
+    }
+
+    public void remove(String name) {
+
     }
 
     public static synchronized Model getInstance() {

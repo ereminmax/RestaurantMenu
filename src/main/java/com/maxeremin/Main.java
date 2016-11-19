@@ -1,16 +1,15 @@
 package com.maxeremin;
 
 import com.maxeremin.controller.Controller;
-import com.maxeremin.controller.ControllerInterface;
-import com.maxeremin.model.Model;
-import com.maxeremin.model.ModelInterface;
+import com.maxeremin.view.View;
 
 class Main {
 
     public static void main(String ... arg) {
 
-        ModelInterface model = Model.getInstance();
-        ControllerInterface controller = Controller.getInstance(model);
+        Controller.getInstance();
+        View view = View.getInstance();
+        view.execute();
 
     }
 

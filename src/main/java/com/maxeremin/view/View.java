@@ -1,32 +1,30 @@
 package com.maxeremin.view;
 
-import com.maxeremin.controller.ControllerInterface;
-import com.maxeremin.model.ModelInterface;
+import com.maxeremin.controller.Controller;
 
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Максим on 13.11.2016.
  */
 public class View {
     private static View instance = null;
-    ModelInterface model;
-    ControllerInterface controller;
-
     private Scanner sc = new Scanner(System.in);
     private int input;
 
-    private View(ControllerInterface controller, ModelInterface model) {
-        this.controller = controller;
-        this.model = model;
+    private View() {
     }
 
     public void execute() {
         while(true) {
             System.out.println("Введите 0 Выход\n"
                     + "Введите 1 Открыть XML\n"
-                    + "Введите 2 Найти пункт меню");
+                    + "Введите 2 Найти пункт меню"
+                    //+ "Введите 3 Добавить пункт меню"
+                    //+ "Введите 4 Удалить пункт меню"
+                    //+ "Введите 5 Изменить пункт меню"
+
+            );
             input = sc.nextInt();
             sc.nextLine();
 
@@ -35,19 +33,34 @@ public class View {
                     System.exit(0);
                     break;
                 case 1:
-                    controller.readTypes();
-                    controller.readMenu();
-                    System.out.println("Done!");
+                    readFiles();
                     break;
                 case 2:
                     search();
                     break;
                 /*case 3:
-                    new Exception("exception", new Exception())*/
+                    controller.add();
+                    if (Controller.getInstance().checkStatus()) {
+                        System.err.println("Dish with specified name does not exist! ");
+                        return;
+                    }
+                    break;*/
+                /*case 4:
+                    Controller.getInstance().remove(name);*/
                 default:
                     continue;
             }
         }
+    }
+
+    private void readFiles() {
+        Controller.getInstance().readTypes();
+        Controller.getInstance().readMenu();
+        if (Controller.getInstance().checkStatus()) {
+            System.err.println("Error occurred while reading files! ");
+            return;
+        }
+        System.out.println("Done!");
     }
 
     private void search() {
@@ -55,13 +68,13 @@ public class View {
 
         String name = sc.nextLine();
 
-        String reply = controller.search(name);
+        String reply = Controller.getInstance().search(name);
 
         System.out.println(reply);
     }
 
-    public static synchronized View getInstance(ControllerInterface controller, ModelInterface model) {
-        if (instance == null) instance = new View(controller, model);
+    public static synchronized View getInstance() {
+        if (instance == null) instance = new View();
         return instance;
     }
 }

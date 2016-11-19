@@ -1,5 +1,6 @@
 package com.maxeremin.controller;
 
+import com.maxeremin.model.Model;
 import com.maxeremin.model.ModelInterface;
 import com.maxeremin.view.View;
 
@@ -10,11 +11,11 @@ public class Controller implements ControllerInterface{
     private static Controller instance = null;
     ModelInterface model;
     View view;
+    boolean exceptionDetected;
 
-    private Controller(ModelInterface model) {
-        this.model = model;
-        view = View.getInstance(this, model);
-        view.execute();
+    private Controller() {
+        model = Model.getInstance();
+        view = View.getInstance();
     }
 
     public void readTypes() {
@@ -29,8 +30,16 @@ public class Controller implements ControllerInterface{
         return model.search(name);
     }
 
-    public static synchronized Controller getInstance(ModelInterface model) {
-        if (instance == null) instance = new Controller(model);
+    public void placeError(boolean flag) {
+        exceptionDetected = flag;
+    }
+
+    public boolean checkStatus() {
+        return exceptionDetected;
+    }
+
+    public static synchronized Controller getInstance() {
+        if (instance == null) instance = new Controller();
         return instance;
     }
 }
