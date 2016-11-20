@@ -20,7 +20,7 @@ import java.util.LinkedList;
  */
 public class Model implements ModelInterface{
     private static Model instance = null;
-     Menu menu = new Menu();
+    private Menu menu;
     private Types types = new Types();
     private static final Logger logger = LogManager.getLogger();
     private SearchValidator searchValidator = new SearchValidator();
@@ -54,8 +54,48 @@ public class Model implements ModelInterface{
         }
     }
 
-    public void readMenu() {
+    public void readMenus() {
+        if (menu == null) {
+            readMenu();
+            return;
+        }
+
         try {
+            String path = "src\\main\\resources\\menu2.xml";
+            File file = new File(path);
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(file);
+
+            NodeList nList = doc.getElementsByTagName("menu_item");
+            for (int i = 0; i < nList.getLength(); i++) {
+                Node nNode = nList.item(i);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element el = (Element) nNode;
+
+                    String name = el.getElementsByTagName("name").item(0).getTextContent().trim();
+                    int dishType = Integer.parseInt(el.getElementsByTagName("dishType").item(0).getTextContent().trim());
+                    double price = Double.parseDouble(el.getElementsByTagName("price").item(0).getTextContent().trim());
+
+                    for (TypeItem typeItem : types.getTypes()) {
+                        if (typeItem.getId() == dishType) {
+                            MenuItem newMI = new MenuItem(name, typeItem.getValue(), price);
+                            if (!menu.getMenu().contains(newMI)) {
+                                menu.addMenuItem(newMI);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Exception occurred while reading types", e);
+            Controller.getInstance().placeError(true);
+        }
+    }
+
+    private void readMenu() {
+        try {
+            menu = new Menu();
             String path = "src\\main\\resources\\menu.xml";
             File file = new File(path);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -70,10 +110,10 @@ public class Model implements ModelInterface{
 
                     String name = el.getElementsByTagName("name").item(0).getTextContent().trim();
                     int dishType = Integer.parseInt(el.getElementsByTagName("dishType").item(0).getTextContent().trim());
-                    Double price = Double.parseDouble( el.getElementsByTagName("price").item(0).getTextContent().trim() );
+                    double price = Double.parseDouble(el.getElementsByTagName("price").item(0).getTextContent().trim());
 
-                    for(TypeItem typeItem : types.getTypes()) {
-                        if(typeItem.getId() == dishType) {
+                    for (TypeItem typeItem : types.getTypes()) {
+                        if (typeItem.getId() == dishType) {
                             menu.addMenuItem(new MenuItem(name, typeItem.getValue(), price));
                         }
                     }
@@ -101,7 +141,7 @@ public class Model implements ModelInterface{
         return "Not found! ";
     }
 
-    public void update(String name, String newName, String type, Double price) {
+    public void update(String name, String newName, String type, double price) {
         for (int i = 0; i < menu.getMenu().size(); i++) {
             if (name.replaceAll("\\s+", " ").equalsIgnoreCase(menu.getMenu().get(i).getName())) {
                 if (newName == null) menu.getMenu().set(i, new MenuItem(name, type, price));
@@ -112,7 +152,7 @@ public class Model implements ModelInterface{
         Controller.getInstance().placeError(true);
     }
 
-    public void add(String name, String type, Double price) {
+    public void add(String name, String type, double price) {
         String cleanName = name.replaceAll("\\s+"," ");
         String cleanType = type.replaceAll("\\s+"," ");
 

@@ -10,8 +10,8 @@ public interface ControllerInterface {
     String search(String name);
     void placeError(boolean flag);
     boolean checkStatus();
-    void add(String name, String type, Double price);
+    void add(String name, String type, double price);
     void remove(String name);
-    void update(String name, String newName, String type, Double price);
+    void update(String name, String newName, String type, double price);
 
 }

@@ -23,7 +23,7 @@ public class Controller implements ControllerInterface{
     }
 
     public void readMenu() {
-        model.readMenu();
+        model.readMenus();
     }
 
     public String search(String name) {
@@ -38,7 +38,7 @@ public class Controller implements ControllerInterface{
         return exceptionDetected;
     }
 
-    public void add(String name, String type, Double price) {
+    public void add(String name, String type, double price) {
         model.add(name, type, price);
     }
 
@@ -46,7 +46,7 @@ public class Controller implements ControllerInterface{
         model.remove(name);
     }
 
-    public void update(String name, String newName, String type, Double price) {
+    public void update(String name, String newName, String type, double price) {
         model.update(name, newName, type, price);
     }
 

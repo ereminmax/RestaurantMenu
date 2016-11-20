@@ -6,10 +6,10 @@ package com.maxeremin.model;
 public interface ModelInterface {
 
     void readTypes();
-    void readMenu();
+    void readMenus();
     String search(String name);
-    void add(String name, String type, Double price);
+    void add(String name, String type, double price);
     void remove(String name);
-    void update(String name, String newName, String type, Double price);
+    void update(String name, String newName, String type, double price);
 
 }

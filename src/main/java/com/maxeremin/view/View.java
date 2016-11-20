@@ -25,6 +25,7 @@ public class View {
                     + "Введите 3 Добавить пункт меню\n"
                     + "Введите 4 Удалить пункт меню\n"
                     + "Введите 5 Изменить пункт меню\n"
+                    + "Введите 6 Добавить данные из другого файла\n"
             );
             input = sc.nextInt();
             sc.nextLine();
@@ -47,6 +48,9 @@ public class View {
                     break;
                 case 5:
                     update();
+                    break;
+                case 6:
+                    readFiles();
                     break;
                 default:
                     continue;
@@ -96,7 +100,7 @@ public class View {
         if (type == null) return;
 
         System.out.println("Введите цену пункта меню, на которое требуется заменить исходное значение\n");
-        Double price = sc.nextDouble();
+        double price = sc.nextDouble();
         sc.nextLine();
 
         Controller.getInstance().update(name, newName, type, price);
@@ -136,7 +140,7 @@ public class View {
         if (type == null) return;
 
         System.out.println("Введите цену пункта меню");
-        Double price = sc.nextDouble();
+        double price = sc.nextDouble();
         sc.nextLine();
         Controller.getInstance().add(name, type, price);
 
@@ -156,6 +160,7 @@ public class View {
             return;
         }
         System.out.println("Done!");
+        printMenu();
     }
 
     private void search() {
