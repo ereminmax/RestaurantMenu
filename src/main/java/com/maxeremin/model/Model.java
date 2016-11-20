@@ -5,6 +5,8 @@ import com.maxeremin.controller.Controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +26,8 @@ public class Model implements ModelInterface{
     private Types types = new Types();
     private static final Logger logger = LogManager.getLogger();
     private SearchValidator searchValidator = new SearchValidator();
+    private Serializer serializer;
+    private File file;
 
     private Model() {
     }
@@ -173,6 +177,22 @@ public class Model implements ModelInterface{
             }
         }
         Controller.getInstance().placeError(true);
+    }
+
+    public void save() {
+        serializer = new Persister();
+        file = new File("src\\main\\resources\\resultMenu.xml");
+        if (menu == null) {
+            Controller.getInstance().placeError(true);
+            return;
+        }
+
+        try {
+            serializer.write(menu, file);
+        } catch (Exception e) {
+            logger.error("Exception occurred while writing the file", e);
+            Controller.getInstance().placeError(true);
+        }
     }
 
     public LinkedList<MenuItem> getMenu() {

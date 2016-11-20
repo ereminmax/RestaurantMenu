@@ -26,6 +26,7 @@ public class View {
                     + "Введите 4 Удалить пункт меню\n"
                     + "Введите 5 Изменить пункт меню\n"
                     + "Введите 6 Добавить данные из другого файла\n"
+                    + "Введите 7 Сохранить\n"
             );
             input = sc.nextInt();
             sc.nextLine();
@@ -52,10 +53,22 @@ public class View {
                 case 6:
                     readFiles();
                     break;
+                case 7:
+                    save();
+                    break;
                 default:
                     continue;
             }
         }
+    }
+
+    private void save() {
+        Controller.getInstance().save();
+        if (Controller.getInstance().checkStatus()) {
+            System.err.println("Exception occurred while writing the file! Check if the actual file was read first");
+            return;
+        }
+        System.out.println("Done! ");
     }
 
     private String chooseType() {

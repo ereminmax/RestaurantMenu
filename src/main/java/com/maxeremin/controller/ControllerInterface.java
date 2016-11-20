@@ -13,5 +13,6 @@ public interface ControllerInterface {
     void add(String name, String type, double price);
     void remove(String name);
     void update(String name, String newName, String type, double price);
+    void save();
 
 }

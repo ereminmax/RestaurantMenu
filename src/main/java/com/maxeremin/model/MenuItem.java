@@ -1,13 +1,20 @@
 package com.maxeremin.model;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 import java.util.Objects;
 
 /**
  * Created by Максим on 13.11.2016.
  */
+@Root(name = "menu_item")
 public class MenuItem {
+    @Element
     private String name;
+    @Element
     private String dishType;
+    @Element
     private double price;
 
     public MenuItem(String name, String dishType, double price) {

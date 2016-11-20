@@ -50,6 +50,10 @@ public class Controller implements ControllerInterface{
         model.update(name, newName, type, price);
     }
 
+    public void save() {
+        model.save();
+    }
+
     public static synchronized Controller getInstance() {
         if (instance == null) instance = new Controller();
         return instance;
