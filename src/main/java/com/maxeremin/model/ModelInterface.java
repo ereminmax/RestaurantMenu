@@ -5,12 +5,12 @@ package com.maxeremin.model;
  */
 public interface ModelInterface {
 
-    void readTypes();
-    void readMenus();
-    String search(String name);
-    void add(String name, String type, double price);
-    void remove(String name);
-    void update(String name, String newName, String type, double price);
-    void save();
+    void readTypes() throws Exception;
+    void readMenus() throws Exception;
+    String search(String name) throws Exception;
+    void add(String name, String type, double price) throws Exception;
+    void remove(String name) throws Exception;
+    void update(String name, String newName, String type, double price) throws Exception;
+    void save() throws Exception;
 
 }

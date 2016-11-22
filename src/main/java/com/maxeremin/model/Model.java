@@ -11,10 +11,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.imageio.IIOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 
 /**
@@ -23,7 +28,7 @@ import java.util.LinkedList;
 public class Model implements ModelInterface{
     private static Model instance = null;
     private Menu menu;
-    private Types types = new Types();
+    private Types types;
     private static final Logger logger = LogManager.getLogger();
     private SearchValidator searchValidator = new SearchValidator();
     private Serializer serializer;
@@ -32,8 +37,13 @@ public class Model implements ModelInterface{
     private Model() {
     }
 
-    public void readTypes() {
+    public void readTypes() throws Exception{
+        if (!(types == null)) {
+            return;
+        }
+
         try {
+            types = new Types();
             String path = "src\\main\\resources\\types.xml";
             File file = new File(path);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -54,14 +64,13 @@ public class Model implements ModelInterface{
             }
         } catch (Exception e) {
             logger.error("Exception occurred while reading types", e);
-            Controller.getInstance().placeError(true);
+            throw new Exception("Exception occurred while reading types");
         }
     }
 
-    public void readMenus() {
+    public void readMenus() throws Exception{
         if (menu == null) {
             readMenu();
-            return;
         }
 
         try {
@@ -92,12 +101,16 @@ public class Model implements ModelInterface{
                 }
             }
         } catch (Exception e) {
-            logger.error("Exception occurred while reading types", e);
-            Controller.getInstance().placeError(true);
+            logger.error("Exception occurred while reading another file", e);
+            throw new Exception("Exception occurred while reading another file");
         }
     }
 
-    private void readMenu() {
+    private void readMenu() throws Exception{
+        if (!(menu == null)) {
+            return;
+        }
+
         try {
             menu = new Menu();
             String path = "src\\main\\resources\\menu.xml";
@@ -123,16 +136,18 @@ public class Model implements ModelInterface{
                     }
                 }
             }
-        } catch (Exception e) {
-            logger.error("Exception occurred while reading types", e);
-            Controller.getInstance().placeError(true);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            logger.error("Exception occurred while reading menu", e);
+            throw new Exception("Exception occurred while reading menu");
         }
     }
 
-    public String search(String name) {
+    public String search(String name) throws Exception{
+        readTypes();
+        readMenu();
 
         if (!searchValidator.validate(name)) {
-            return "Error: Target sentence must contain only cyrillic letters or spaces! ";
+            return "Error: Target sentence must contain cyrillic letters \" - or spaces!";
         }
 
         // To remove duplicate white spaces
@@ -145,18 +160,32 @@ public class Model implements ModelInterface{
         return "Not found! ";
     }
 
-    public void update(String name, String newName, String type, double price) {
+    public void update(String name, String newName, String type, double price) throws Exception {
+        readTypes();
+        readMenu();
+
+        if (!searchValidator.validate(name) || !searchValidator.validate(newName)) {
+            throw new Exception("Error: Target sentences must contain cyrillic letters \" - or spaces!");
+        }
+
         for (int i = 0; i < menu.getMenu().size(); i++) {
             if (name.replaceAll("\\s+", " ").equalsIgnoreCase(menu.getMenu().get(i).getName())) {
-                if (newName == null) menu.getMenu().set(i, new MenuItem(name, type, price));
+                if (newName.equals("")) menu.getMenu().set(i, new MenuItem(name, type, price));
                 else menu.getMenu().set(i, new MenuItem(newName, type, price));
                 return;
             }
         }
-        Controller.getInstance().placeError(true);
+        throw new Exception("Dish with specified name does not exist");
     }
 
-    public void add(String name, String type, double price) {
+    public void add(String name, String type, double price) throws Exception {
+        readTypes();
+        readMenu();
+
+        if (!searchValidator.validate(name)) {
+            throw new Exception("Error: Target sentence must contain cyrillic letters \" - or spaces!");
+        }
+
         String cleanName = name.replaceAll("\\s+"," ");
         String cleanType = type.replaceAll("\\s+"," ");
 
@@ -166,32 +195,33 @@ public class Model implements ModelInterface{
                 return;
             }
         }
-        Controller.getInstance().placeError(true);
+        throw new Exception("Dish with specified name does not exist");
     }
 
-    public void remove(String name) {
+    public void remove(String name) throws Exception{
+        readTypes();
+        readMenu();
+
         for (int i = 0; i < menu.getMenu().size(); i++) {
             if (name.replaceAll("\\s+", " ").equalsIgnoreCase(menu.getMenu().get(i).getName())) {
                 menu.getMenu().remove(i);
                 return;
             }
         }
-        Controller.getInstance().placeError(true);
+        throw new InputMismatchException("Dish with specified name does not exist");
     }
 
-    public void save() {
-        serializer = new Persister();
-        file = new File("src\\main\\resources\\resultMenu.xml");
-        if (menu == null) {
-            Controller.getInstance().placeError(true);
-            return;
-        }
-
+    public void save() throws Exception{
         try {
+            readTypes();
+            readMenu();
+
+            serializer = new Persister();
+            file = new File("src\\main\\resources\\resultMenu.xml");
             serializer.write(menu, file);
         } catch (Exception e) {
             logger.error("Exception occurred while writing the file", e);
-            Controller.getInstance().placeError(true);
+            throw new Exception("Exception occurred while writing the file");
         }
     }
 

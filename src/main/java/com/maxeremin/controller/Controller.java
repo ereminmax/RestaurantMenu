@@ -18,15 +18,15 @@ public class Controller implements ControllerInterface{
         view = View.getInstance();
     }
 
-    public void readTypes() {
+    public void readTypes() throws Exception {
         model.readTypes();
     }
 
-    public void readMenu() {
+    public void readMenu() throws Exception {
         model.readMenus();
     }
 
-    public String search(String name) {
+    public String search(String name) throws Exception {
         return model.search(name);
     }
 
@@ -38,19 +38,19 @@ public class Controller implements ControllerInterface{
         return exceptionDetected;
     }
 
-    public void add(String name, String type, double price) {
+    public void add(String name, String type, double price) throws Exception {
         model.add(name, type, price);
     }
 
-    public void remove(String name) {
+    public void remove(String name) throws Exception {
         model.remove(name);
     }
 
-    public void update(String name, String newName, String type, double price) {
+    public void update(String name, String newName, String type, double price) throws Exception {
         model.update(name, newName, type, price);
     }
 
-    public void save() {
+    public void save() throws Exception {
         model.save();
     }
 

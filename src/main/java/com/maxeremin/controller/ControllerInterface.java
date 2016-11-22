@@ -5,14 +5,14 @@ package com.maxeremin.controller;
  */
 public interface ControllerInterface {
 
-    void readTypes();
-    void readMenu();
-    String search(String name);
+    void readTypes() throws Exception;
+    void readMenu() throws Exception;
+    String search(String name) throws Exception;
     void placeError(boolean flag);
     boolean checkStatus();
-    void add(String name, String type, double price);
-    void remove(String name);
-    void update(String name, String newName, String type, double price);
-    void save();
+    void add(String name, String type, double price) throws Exception;
+    void remove(String name) throws Exception;
+    void update(String name, String newName, String type, double price) throws Exception;
+    void save() throws Exception;
 
 }

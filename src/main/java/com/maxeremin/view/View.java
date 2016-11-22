@@ -4,6 +4,7 @@ import com.maxeremin.controller.Controller;
 import com.maxeremin.model.MenuItem;
 import com.maxeremin.model.Model;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -19,17 +20,22 @@ public class View {
 
     public void execute() {
         while(true) {
-            System.out.print("Введите 0 Выход\n"
-                    + "Введите 1 Открыть XML\n"
-                    + "Введите 2 Найти пункт меню\n"
-                    + "Введите 3 Добавить пункт меню\n"
-                    + "Введите 4 Удалить пункт меню\n"
-                    + "Введите 5 Изменить пункт меню\n"
-                    + "Введите 6 Добавить данные из другого файла\n"
-                    + "Введите 7 Сохранить\n"
+            System.out.print("Type 0 Exit\n"
+                    + "Type 1 Open XML\n"
+                    + "Type 2 Find menu item\n"
+                    + "Type 3 Add menu item\n"
+                    + "Type 4 Delete menu item\n"
+                    + "Type 5 Update menu item\n"
+                    + "Type 6 Add data from another file\n"
+                    + "Type 7 Save\n"
             );
-            input = sc.nextInt();
-            sc.nextLine();
+
+            try {
+                input = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.err.println("Type only numbers from the list");
+            }
 
             switch (input) {
                 case 0:
@@ -63,26 +69,31 @@ public class View {
     }
 
     private void save() {
-        Controller.getInstance().save();
-        if (Controller.getInstance().checkStatus()) {
-            System.err.println("Exception occurred while writing the file! Check if the actual file was read first");
-            return;
+        try {
+            Controller.getInstance().save();
+            System.out.println("Done!");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        System.out.println("Done! ");
     }
 
     private String chooseType() {
         String type = null;
-        System.out.print("Выберите тип пункта меню, на которое требуется заменить исходное значение\n"
-                + "Введите 1 Первое\n"
-                + "Введите 2 Второе\n"
-                + "Введите 3 Салат\n"
-                + "Введите 4 Сладкое\n"
+        System.out.print("Choose the type of the dish, you want to change the actual one to\n"
+                + "Type 1 First\n"
+                + "Type 2 Second\n"
+                + "Type 3 Salad\n"
+                + "Type 4 Sweet\n"
         );
-        int typeID = sc.nextInt();
-        sc.nextLine();
 
-        switch (typeID) {
+        try {
+            input = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.err.println("Type only numbers from the list");
+        }
+
+        switch (input) {
             case 1:
                 type = "First";
                 break;
@@ -96,48 +107,50 @@ public class View {
                 type = "Sweet";
                 break;
             default:
-                System.err.println("Выберите один из предложенных вариантов!");
+                System.err.println("You must choose type from provided list!");
         }
         return type;
     }
 
     private void update() {
-        System.out.println("Введите имя пункта меню, название которого требуется изменить");
+        System.out.println("Type the name of the dish you want to update the information about");
         String name = sc.nextLine();
 
-        System.out.println("Введите новое имя пункта меню, либо оставьте поле пустым");
+        System.out.println("Type the desired name of the dish or skip this step");
         String newName = sc.nextLine();
-        if (newName.equals("")) newName = null;
+        //if (newName.equals("")) newName = null;
 
         String type = chooseType();
         if (type == null) return;
 
-        System.out.println("Введите цену пункта меню, на которое требуется заменить исходное значение\n");
-        double price = sc.nextDouble();
-        sc.nextLine();
-
-        Controller.getInstance().update(name, newName, type, price);
-
-        if (Controller.getInstance().checkStatus()) {
-            System.err.println("Dish with specified name does not exist! ");
-            return;
+        System.out.println("Type the desired price");
+        try {
+            double price = sc.nextDouble();
+            sc.nextLine();
+            Controller.getInstance().update(name, newName, type, price);
+            System.out.println("Done! ");
+            printMenu();
+        } catch (InputMismatchException e) {
+            System.err.println("Type the numbers only");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        System.out.println("Done! ");
-        printMenu();
     }
 
     private void remove() {
-        System.out.println("Введите имя пункта меню");
+        System.out.println("Type the name of the menu item");
         String name = sc.nextLine();
-        Controller.getInstance().remove(name);
-        if (Controller.getInstance().checkStatus()) {
-            System.err.println("Dish with specified name does not exist! ");
-            return;
+
+        try {
+            Controller.getInstance().remove(name);
+            System.out.println("Done! ");
+            printMenu();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        System.out.println("Done! ");
-        printMenu();
     }
 
+    // Позже удалю
     private void printMenu() {
         for(MenuItem mi: Model.getInstance().getMenu()) {
             System.out.println(mi.toString());
@@ -145,45 +158,48 @@ public class View {
     }
 
     private void add() {
-
-        System.out.println("Введите имя пункта меню");
+        System.out.println("Type the name of the menu item");
         String name = sc.nextLine();
 
         String type = chooseType();
         if (type == null) return;
 
-        System.out.println("Введите цену пункта меню");
-        double price = sc.nextDouble();
-        sc.nextLine();
-        Controller.getInstance().add(name, type, price);
-
-        if (Controller.getInstance().checkStatus()) {
-            System.err.println("Dish with specified name does not exist! ");
-            return;
+        System.out.println("Type the price of the menu item");
+        double price = 0;
+        try {
+            price = sc.nextDouble();
+            sc.nextLine();
+            Controller.getInstance().add(name, type, price);
+            System.out.println("Done!");
+            printMenu();
+        } catch (InputMismatchException e) {
+            System.err.println("Type the numbers only");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        System.out.println("Done! ");
-        printMenu();
     }
 
     private void readFiles() {
-        Controller.getInstance().readTypes();
-        Controller.getInstance().readMenu();
-        if (Controller.getInstance().checkStatus()) {
-            System.err.println("Error occurred while reading files! ");
-            return;
+        try {
+            Controller.getInstance().readTypes();
+            Controller.getInstance().readMenu();
+            System.out.println("Done!");
+            printMenu();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        System.out.println("Done!");
-        printMenu();
     }
 
     private void search() {
-        System.out.println("Введите имя пункта меню");
-
+        System.out.println("Type the name of the menu item");
         String name = sc.nextLine();
 
-        String reply = Controller.getInstance().search(name);
-
-        System.out.println(reply);
+        try {
+            String reply = Controller.getInstance().search(name);
+            System.out.println(reply);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public static synchronized View getInstance() {
