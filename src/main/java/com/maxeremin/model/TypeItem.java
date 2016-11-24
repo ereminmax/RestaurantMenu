@@ -1,7 +1,9 @@
 package com.maxeremin.model;
 
 /**
- * Created by Максим on 13.11.2016.
+ * Each instance of this class contains {@link #id id} and {@link #value value} of one dish type
+ * @author Max Eremin
+ * @since 1.0
  */
 class TypeItem {
     private int id;

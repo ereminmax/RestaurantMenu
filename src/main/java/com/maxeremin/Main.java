@@ -14,7 +14,7 @@ class Main {
         View view = View.getInstance();
         /**
          * Runs console app
-         * @see view.View#execute()
+         * @see View#execute()
          */
         view.execute();
 

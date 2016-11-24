@@ -6,7 +6,10 @@ import org.simpleframework.xml.Root;
 import java.util.Objects;
 
 /**
- * Created by Максим on 13.11.2016.
+ * This class is serialized using XML Simple Serializer framework
+ * It contains data about each menu item, including {@link #name name}, {@link #dishType type} and {@link #price price}
+ * @author Max Eremin
+ * @since 1.0
  */
 @Root(name = "menu_item")
 public class MenuItem {

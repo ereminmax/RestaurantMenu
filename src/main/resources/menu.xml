@@ -84,4 +84,9 @@
       <dishType>2</dishType>
       <price>53.0</price>
    </menu_item>
+   <menu_item>
+      <name>Суп по-итальянски</name>
+      <dishType>1</dishType>
+      <price>87.0</price>
+   </menu_item>
 </menu_list>

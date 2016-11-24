@@ -19,7 +19,10 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 
 /**
- * Created by Максим on 13.11.2016.
+ * Reads the data from XML and puts it to the list
+ * Contains different methods which implements CRUD operations with the data
+ * @author Max Eremin
+ * @since 1.0
  */
 public class Model implements ModelInterface{
     private static Model instance = null;
@@ -32,6 +35,11 @@ public class Model implements ModelInterface{
 
     private Model() {
     }
+
+    /**
+     * Read type from XML file using DOM parser and puts data to the {@link Menu#menu list}
+     * @throws Exception if some problems appeared
+     */
 
     public void readTypes() throws Exception{
         if (!(types == null)) {
@@ -63,6 +71,12 @@ public class Model implements ModelInterface{
             throw new Exception("Exception occurred while reading types");
         }
     }
+
+    /**
+     * Reads the menu from another XML file using DOM parser and checks if another file matches or not the existing one
+     * Puts data to the {@link Menu#menu list}
+     * @throws Exception if some problems appeared
+     */
 
     public void readMenus() throws Exception{
         if (menu == null) {
@@ -99,6 +113,11 @@ public class Model implements ModelInterface{
         }
     }
 
+    /**
+     * Reads the menu from XML using DOM parser and puts it to the {@link Menu#menu list}
+     * @throws Exception if some problems appeared
+     */
+
     private void readMenu() throws Exception{
         if (!(menu == null)) {
             return;
@@ -131,6 +150,13 @@ public class Model implements ModelInterface{
         }
     }
 
+    /**
+     * Searches the target item in the menu using the name
+     * @param name Name of the target item from the menu
+     * @return Returns the data of the item or the information if the date does not exist
+     * @throws Exception if some problems caused while reading {@link #readTypes() types} or {@link #readMenu() menu}
+     */
+
     public String search(String name) throws Exception{
         readTypes();
         readMenu();
@@ -148,6 +174,16 @@ public class Model implements ModelInterface{
 
         return "Not found! ";
     }
+
+    /**
+     * Updates the data about the existing items from the menu
+     * @param name name of existing item
+     * @param newName new name of the target item
+     * @param type new type of the target item
+     * @param price new price of the targetn item
+     * @throws Exception if the existing or the new names of the item does not match the
+     * {@link SearchValidator#SEARCH_PATTERN pattern}
+     */
 
     public void update(String name, String newName, int type, double price) throws Exception {
         readTypes();
@@ -168,6 +204,16 @@ public class Model implements ModelInterface{
         throw new Exception("Dish with specified name does not exist");
     }
 
+    /**
+     * Adds new item to the {@link Menu#menu list}
+     * @param name name of the new item
+     * @param type type of the new item
+     * @param price price of the new item
+     * @see MenuItem
+     * @see SearchValidator
+     * @throws Exception if the name of the target item does not match the {@link SearchValidator#SEARCH_PATTERN pattern}
+     */
+
     public void add(String name, int type, double price) throws Exception {
         readTypes();
         readMenu();
@@ -181,6 +227,12 @@ public class Model implements ModelInterface{
         menu.addMenuItem(new MenuItem(cleanName, type, price));
         save();
     }
+
+    /**
+     * Removes the item from the menu list
+     * @param name Name of the item you want to delete from the menu
+     * @throws Exception if the target item does not exist in the list
+     */
 
     public void remove(String name) throws Exception{
         readTypes();
@@ -196,6 +248,11 @@ public class Model implements ModelInterface{
         throw new InputMismatchException("Dish with specified name does not exist");
     }
 
+    /**
+     * Saves {@link Menu#menu menu} to the XML file using Simple XML Serializer framework
+     * @throws Exception
+     */
+
     public void save() throws Exception{
         try {
             readTypes();
@@ -209,6 +266,11 @@ public class Model implements ModelInterface{
             throw new Exception("Exception occurred while writing the file");
         }
     }
+
+    /**
+     * Gets the list of the menu
+     * @return String array of the menu {@link Menu#menu list}
+     */
 
     public String[] getMenu() {
         final int N = menu.getMenu().size()*3;

@@ -6,7 +6,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Created by Максим on 13.11.2016.
+ * Interact with the user using console
+ * @since 1.0
  */
 public class View {
     private static View instance = null;
@@ -15,6 +16,12 @@ public class View {
 
     private View() {
     }
+
+    /**
+     * Runs endless loop which could be stopped by sending Exit command
+     * Invokes different methods according to user's commands
+     * Checks if the input value is a number
+     */
 
     public void execute() {
         while(true) {
@@ -70,6 +77,10 @@ public class View {
         }
     }
 
+    /**
+     * Saves the changes to menu.xml
+     */
+
     private void save() {
         try {
             Controller.getInstance().save();
@@ -78,6 +89,11 @@ public class View {
             System.err.println(e.getMessage());
         }
     }
+
+    /**
+     * Asks the user to choose the desired dish type and checks the input value
+     * @return id of dish's type
+     */
 
     private int chooseType() {
         System.out.print("Choose the type of the dish, you want to change the actual one to\n"
@@ -100,7 +116,11 @@ public class View {
     }
 
     /**
-     * Updates the item's data
+     * Updates the item's data by asking from user
+     * Value of an item which he wants to change information about
+     * Value of the new name
+     * Value of the {@link View#chooseType() type}
+     * Value of the new price
      */
 
     private void update() {
@@ -127,6 +147,7 @@ public class View {
 
     /**
      * Removes item from menu
+     * Asks the user for the name of the file to remove
      */
 
     private void remove() {
@@ -141,6 +162,10 @@ public class View {
         }
     }
 
+    /**
+     * Prints the all menu line by line
+     */
+
     private void printMenu() {
         String[] strArr = Controller.getInstance().getMenu();
         int size = strArr.length;
@@ -149,6 +174,13 @@ public class View {
             System.out.println(strArr[i] + " " + strArr[++i] + " " + strArr[++i]);
         }
     }
+
+    /**
+     * Adds the new item to menu
+     * Asks for the name of the new item
+     * {@link #chooseType() Type}
+     * Price
+     */
 
     private void add() {
         System.out.println("Type the name of the menu item");
@@ -170,6 +202,10 @@ public class View {
         }
     }
 
+    /**
+     * Reads the data from XML files
+     */
+
     private void readFiles() {
         try {
             Controller.getInstance().readTypes();
@@ -179,6 +215,11 @@ public class View {
             System.err.println(e.getMessage());
         }
     }
+
+    /**
+     * Searches the item from the menu
+     * Asks the user for the name to find
+     */
 
     private void search() {
         System.out.println("Type the name of the menu item");
