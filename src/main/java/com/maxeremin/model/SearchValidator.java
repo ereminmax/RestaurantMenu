@@ -10,7 +10,7 @@ public class SearchValidator {
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String SEARCH_PATTERN = "([а-яА-Я-\"]*\\s*)+";
+    private static final String SEARCH_PATTERN = "([-а-яА-Я\"]*\\s*)+";
 
     public SearchValidator() {
         pattern = Pattern.compile(SEARCH_PATTERN);

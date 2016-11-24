@@ -13,11 +13,11 @@ public class MenuItem {
     @Element
     private String name;
     @Element
-    private String dishType;
+    private int dishType;
     @Element
     private double price;
 
-    public MenuItem(String name, String dishType, double price) {
+    public MenuItem(String name, int dishType, double price) {
         this.name = name;
         this.dishType = dishType;
         this.price = price;
@@ -27,7 +27,7 @@ public class MenuItem {
         return name;
     }
 
-    public String getDishType() {
+    public int getDishType() {
         return dishType;
     }
 
@@ -59,6 +59,6 @@ public class MenuItem {
         MenuItem menuItem = (MenuItem) obj;
         return price == menuItem.price &&
                 Objects.equals(name, menuItem.name) &&
-                Objects.equals(dishType, menuItem.dishType);
+                dishType == menuItem.dishType;
     }
 }

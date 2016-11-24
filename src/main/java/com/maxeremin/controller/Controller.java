@@ -11,7 +11,6 @@ public class Controller implements ControllerInterface{
     private static Controller instance = null;
     ModelInterface model;
     View view;
-    boolean exceptionDetected;
 
     private Controller() {
         model = Model.getInstance();
@@ -30,15 +29,7 @@ public class Controller implements ControllerInterface{
         return model.search(name);
     }
 
-    public void placeError(boolean flag) {
-        exceptionDetected = flag;
-    }
-
-    public boolean checkStatus() {
-        return exceptionDetected;
-    }
-
-    public void add(String name, String type, double price) throws Exception {
+    public void add(String name, int type, double price) throws Exception {
         model.add(name, type, price);
     }
 
@@ -46,12 +37,16 @@ public class Controller implements ControllerInterface{
         model.remove(name);
     }
 
-    public void update(String name, String newName, String type, double price) throws Exception {
+    public void update(String name, String newName, int type, double price) throws Exception {
         model.update(name, newName, type, price);
     }
 
     public void save() throws Exception {
         model.save();
+    }
+
+    public String[] getMenu() {
+        return model.getMenu();
     }
 
     public static synchronized Controller getInstance() {

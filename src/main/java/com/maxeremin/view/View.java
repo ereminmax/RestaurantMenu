@@ -1,8 +1,6 @@
 package com.maxeremin.view;
 
 import com.maxeremin.controller.Controller;
-import com.maxeremin.model.MenuItem;
-import com.maxeremin.model.Model;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -28,6 +26,7 @@ public class View {
                     + "Type 5 Update menu item\n"
                     + "Type 6 Add data from another file\n"
                     + "Type 7 Save\n"
+                    + "Type 8 Print menu\n"
             );
 
             try {
@@ -62,6 +61,9 @@ public class View {
                 case 7:
                     save();
                     break;
+                case 8:
+                    printMenu();
+                    break;
                 default:
                     continue;
             }
@@ -77,8 +79,7 @@ public class View {
         }
     }
 
-    private String chooseType() {
-        String type = null;
+    private int chooseType() {
         System.out.print("Choose the type of the dish, you want to change the actual one to\n"
                 + "Type 1 First\n"
                 + "Type 2 Second\n"
@@ -89,28 +90,18 @@ public class View {
         try {
             input = sc.nextInt();
             sc.nextLine();
+            if (!(input < 5 && input > 0)) throw new Exception("Choose 1, 2, 3, or 4");
         } catch (InputMismatchException e) {
-            System.err.println("Type only numbers from the list");
+            System.err.println("Type only numbers");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-
-        switch (input) {
-            case 1:
-                type = "First";
-                break;
-            case 2:
-                type = "Second";
-                break;
-            case 3:
-                type = "Salad";
-                break;
-            case 4:
-                type = "Sweet";
-                break;
-            default:
-                System.err.println("You must choose type from provided list!");
-        }
-        return type;
+        return input;
     }
+
+    /**
+     * Updates the item's data
+     */
 
     private void update() {
         System.out.println("Type the name of the dish you want to update the information about");
@@ -118,10 +109,8 @@ public class View {
 
         System.out.println("Type the desired name of the dish or skip this step");
         String newName = sc.nextLine();
-        //if (newName.equals("")) newName = null;
 
-        String type = chooseType();
-        if (type == null) return;
+        int type = chooseType();
 
         System.out.println("Type the desired price");
         try {
@@ -129,13 +118,16 @@ public class View {
             sc.nextLine();
             Controller.getInstance().update(name, newName, type, price);
             System.out.println("Done! ");
-            printMenu();
         } catch (InputMismatchException e) {
             System.err.println("Type the numbers only");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
+
+    /**
+     * Removes item from menu
+     */
 
     private void remove() {
         System.out.println("Type the name of the menu item");
@@ -144,16 +136,17 @@ public class View {
         try {
             Controller.getInstance().remove(name);
             System.out.println("Done! ");
-            printMenu();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    // Позже удалю
     private void printMenu() {
-        for(MenuItem mi: Model.getInstance().getMenu()) {
-            System.out.println(mi.toString());
+        String[] strArr = Controller.getInstance().getMenu();
+        int size = strArr.length;
+
+        for(int i = 0; i < size; i++) {
+            System.out.println(strArr[i] + " " + strArr[++i] + " " + strArr[++i]);
         }
     }
 
@@ -161,17 +154,15 @@ public class View {
         System.out.println("Type the name of the menu item");
         String name = sc.nextLine();
 
-        String type = chooseType();
-        if (type == null) return;
+        int type = chooseType();
 
         System.out.println("Type the price of the menu item");
-        double price = 0;
+
         try {
-            price = sc.nextDouble();
+            double price = sc.nextDouble();
             sc.nextLine();
             Controller.getInstance().add(name, type, price);
             System.out.println("Done!");
-            printMenu();
         } catch (InputMismatchException e) {
             System.err.println("Type the numbers only");
         } catch (Exception e) {
@@ -184,7 +175,6 @@ public class View {
             Controller.getInstance().readTypes();
             Controller.getInstance().readMenu();
             System.out.println("Done!");
-            printMenu();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

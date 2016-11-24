@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu_list>
-    <menu_item id="1">
+    <menu_item>
         <name>
             Суп по-итальянски
         </name>
@@ -11,7 +11,7 @@
             87
         </price>
     </menu_item>
-    <menu_item id="2">
+    <menu_item>
         <name>
             Печень по королевски
         </name>

@@ -2,19 +2,20 @@ package com.maxeremin;
 
 import com.maxeremin.view.View;
 
-/*<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-compiler-plugin</artifactId>
-<configuration>
-<source>1.8</source>
-<target>1.8</target>
-</configuration>
-</plugin>*/
+/**
+ * Console app which supports CRUD operations with data retrieved from XML file, located in Resources folder.
+ * @author Max Eremin
+ * @version 1.0
+ */
 class Main {
 
     public static void main(String ... arg) {
 
         View view = View.getInstance();
+        /**
+         * Runs console app
+         * @see view.View#execute()
+         */
         view.execute();
 
     }

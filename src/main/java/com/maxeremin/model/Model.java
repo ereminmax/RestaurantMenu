@@ -1,7 +1,5 @@
 package com.maxeremin.model;
 
-import com.maxeremin.controller.Controller;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,14 +11,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.imageio.IIOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.InputMismatchException;
-import java.util.LinkedList;
 
 /**
  * Created by Максим on 13.11.2016.
@@ -90,14 +86,11 @@ public class Model implements ModelInterface{
                     int dishType = Integer.parseInt(el.getElementsByTagName("dishType").item(0).getTextContent().trim());
                     double price = Double.parseDouble(el.getElementsByTagName("price").item(0).getTextContent().trim());
 
-                    for (TypeItem typeItem : types.getTypes()) {
-                        if (typeItem.getId() == dishType) {
-                            MenuItem newMI = new MenuItem(name, typeItem.getValue(), price);
-                            if (!menu.getMenu().contains(newMI)) {
-                                menu.addMenuItem(newMI);
-                            }
-                        }
+                    MenuItem newMI = new MenuItem(name, dishType, price);
+                    if (!menu.getMenu().contains(newMI)) {
+                        menu.addMenuItem(newMI);
                     }
+                    save();
                 }
             }
         } catch (Exception e) {
@@ -129,11 +122,7 @@ public class Model implements ModelInterface{
                     int dishType = Integer.parseInt(el.getElementsByTagName("dishType").item(0).getTextContent().trim());
                     double price = Double.parseDouble(el.getElementsByTagName("price").item(0).getTextContent().trim());
 
-                    for (TypeItem typeItem : types.getTypes()) {
-                        if (typeItem.getId() == dishType) {
-                            menu.addMenuItem(new MenuItem(name, typeItem.getValue(), price));
-                        }
-                    }
+                    menu.addMenuItem(new MenuItem(name, dishType, price));
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
@@ -160,7 +149,7 @@ public class Model implements ModelInterface{
         return "Not found! ";
     }
 
-    public void update(String name, String newName, String type, double price) throws Exception {
+    public void update(String name, String newName, int type, double price) throws Exception {
         readTypes();
         readMenu();
 
@@ -172,13 +161,14 @@ public class Model implements ModelInterface{
             if (name.replaceAll("\\s+", " ").equalsIgnoreCase(menu.getMenu().get(i).getName())) {
                 if (newName.equals("")) menu.getMenu().set(i, new MenuItem(name, type, price));
                 else menu.getMenu().set(i, new MenuItem(newName, type, price));
+                save();
                 return;
             }
         }
         throw new Exception("Dish with specified name does not exist");
     }
 
-    public void add(String name, String type, double price) throws Exception {
+    public void add(String name, int type, double price) throws Exception {
         readTypes();
         readMenu();
 
@@ -187,15 +177,9 @@ public class Model implements ModelInterface{
         }
 
         String cleanName = name.replaceAll("\\s+"," ");
-        String cleanType = type.replaceAll("\\s+"," ");
 
-        for (TypeItem ti: types.getTypes()) {
-            if (cleanType.equalsIgnoreCase(ti.getValue())) {
-                menu.addMenuItem(new MenuItem(cleanName, ti.getValue(), price));
-                return;
-            }
-        }
-        throw new Exception("Dish with specified name does not exist");
+        menu.addMenuItem(new MenuItem(cleanName, type, price));
+        save();
     }
 
     public void remove(String name) throws Exception{
@@ -205,6 +189,7 @@ public class Model implements ModelInterface{
         for (int i = 0; i < menu.getMenu().size(); i++) {
             if (name.replaceAll("\\s+", " ").equalsIgnoreCase(menu.getMenu().get(i).getName())) {
                 menu.getMenu().remove(i);
+                save();
                 return;
             }
         }
@@ -217,7 +202,7 @@ public class Model implements ModelInterface{
             readMenu();
 
             serializer = new Persister();
-            file = new File("src\\main\\resources\\resultMenu.xml");
+            file = new File("src\\main\\resources\\menu.xml");
             serializer.write(menu, file);
         } catch (Exception e) {
             logger.error("Exception occurred while writing the file", e);
@@ -225,8 +210,24 @@ public class Model implements ModelInterface{
         }
     }
 
-    public LinkedList<MenuItem> getMenu() {
-        return menu.getMenu();
+    public String[] getMenu() {
+        final int N = menu.getMenu().size()*3;
+        String[] menuArr = new String[N];
+        int i = 0;
+        
+        for (MenuItem mi: menu.getMenu()) {
+                menuArr[i] = mi.getName();
+
+                for (TypeItem ti: types.getTypes()) {
+                    if (ti.getId() == mi.getDishType()) {
+                        menuArr[++i] = ti.getValue();
+                    }
+                }
+                menuArr[++i] = String.valueOf(mi.getPrice());
+                i++;
+        }
+        
+        return menuArr;
     }
 
     public static synchronized Model getInstance() {
