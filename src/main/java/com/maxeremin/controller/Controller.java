@@ -2,7 +2,10 @@ package com.maxeremin.controller;
 
 import com.maxeremin.model.Model;
 import com.maxeremin.model.ModelInterface;
+import com.maxeremin.model.ModelSQL;
 import com.maxeremin.view.View;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author Max Eremin
@@ -12,9 +15,13 @@ public class Controller implements ControllerInterface{
     private static Controller instance = null;
     ModelInterface model;
     View view;
+    ApplicationContext context;
+    ModelSQL obj;
 
     private Controller() {
-        model = Model.getInstance();
+        context = new ClassPathXmlApplicationContext("SpringBeans.xml");
+        model = (ModelSQL) context.getBean("modelSQL");
+        //model = Model.getInstance();
         view = View.getInstance();
     }
 

@@ -25,6 +25,12 @@
             <artifactId>simple-xml</artifactId>
             <version>2.7.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.4.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
