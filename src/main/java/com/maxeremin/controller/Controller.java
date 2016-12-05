@@ -19,7 +19,7 @@ public class Controller implements ControllerInterface{
     ModelSQL obj;
 
     private Controller() {
-        context = new ClassPathXmlApplicationContext("SpringBeans.xml");
+        context = new ClassPathXmlApplicationContext("Spring-Module.xml");
         model = (ModelSQL) context.getBean("modelSQL");
         //model = Model.getInstance();
         view = View.getInstance();

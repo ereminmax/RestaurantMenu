@@ -136,6 +136,7 @@ public class View {
         try {
             double price = sc.nextDouble();
             sc.nextLine();
+
             Controller.getInstance().update(name, newName, type, price);
             System.out.println("Done! ");
         } catch (InputMismatchException e) {
